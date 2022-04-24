@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 const app = express();
 const path = require("path");
 const apiRoute = require("./routes/routes");
@@ -16,10 +17,12 @@ db.on("error", () => console.log("error on database load"));
 
 db.once("open", () => console.log("database running"));
 
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/user", apiRoute);
 app.use("/home", logged);
+app.use(express.static(path.join(__dirname, "front", "build")));
 
 const ROOM = process.env.PORT;
 app.listen(ROOM, () => console.log("server running at port", ROOM));

@@ -1,17 +1,21 @@
-# jwt-login-backend
+# jwt-login-full
 
 ## 💻Techs :
-* Mongoose
-* Node
-* Express
-* jsonwebtoken
-* bcrypt
 
-### Para testar use o insomnia ou postman
+- Mongoose
+- Node
+- Express
+- jsonwebtoken
+- bcrypt
+- cookie-parser
+- React
+- React Router
 
-#### Como testar?
-* Conecte com o banco de dados Mongodb
-* Crie seu usuário, senha e coloque em um aquivo `.env`
-* Para o JWT coloque a word secret em um `.env` também
+## Front e Back ligados!
 
-### Pode integrar com o front =D
+- Para testar, no diretório raiz crie um aquivo `.env` e coloque o `username` e `password` do seu mongodb atlas
+- Em seguida coloque também uma porta para seu servidor rodas, por fim, coloque um segredo no token `JWT`
+
+#### Para rodar, dê um `npm run start_node`
+
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/84200694/164985407-4610dfcb-4c2c-49cf-991e-0c1439416976.gif)

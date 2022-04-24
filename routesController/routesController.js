@@ -5,16 +5,17 @@ const jwt = require("jsonwebtoken");
 const registerAuth = async (req, res) => {
   const userAuthExist = await User.findOne({ email: req.body.email });
   if (userAuthExist) return res.status(400).send("email already exist");
-  let userRegister = new User({
+  let userRegister = {
     username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password),
-  });
+  };
 
   try {
-    let userSaved = await userRegister.save();
-    res.redirect("/");
+    let userSaved = await User.create(userRegister);
+    res.status(200).redirect("/");
   } catch (error) {
+    console.log("erro no registro", erro);
     res.send("error register user :-(");
   }
 };
@@ -27,14 +28,14 @@ const loginAuth = async (req, res) => {
     req.body.password,
     userAuthExist.password
   );
-  if (!userFound) return res.status(404).send("user not found");
-  const token = jwt.sign({ _id: userAuthExist._id }, process.env.TOKEN_SECRET);
+  if (!userFound) return res.status(404).send("senha incorreta");
+  const token = await jwt.sign(
+    { _id: userAuthExist._id },
+    process.env.TOKEN_SECRET
+  );
 
-  if (!token) return console.log("esse token deixou de ser válido");
-
-  res.header("authorization-token", token);
-
-  res.send("user logged :)");
+  res.cookie("token", token);
+  res.status(200).redirect("/home");
 };
 
 module.exports = { registerAuth, loginAuth };
